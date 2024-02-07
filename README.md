@@ -70,7 +70,7 @@ CUDA_VISIBLE_DEVICES=0 bash scripts/llama2-7b/restart_7b_viggo_4bit.sh
 CUDA_VISIBLE_DEVICES=0 bash scripts/llama2-7b/restart_7b_viggo_bf16.sh
 ```
 
-These scripts essentially run `scripts/restarted_llama2.sh` with different hyper-parameters, which takes care of low-rank adapter warmup and restarting the training after mask generation. Feel free to tweak the hyper-parameters in any of these scripts.
+These scripts essentially run `scripts/restarter_llama2.sh` with different hyper-parameters, which takes care of low-rank adapter warmup and restarting the training after mask generation. Feel free to tweak the hyper-parameters in any of these scripts.
 
 ## TODO
 - Include memory and time analysis
