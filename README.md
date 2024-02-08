@@ -2,8 +2,9 @@
 
 This repository includes the code for the paper ["RoSA: Accurate Parameter-Efficient Fine-Tuning via Robust Adaptation"](https://arxiv.org/abs/2401.04679). Below you find an illustration of RoSA and a brief comparision with Full Fine-Tuning (FFT) and Low-Rank Adaptation (LoRA).
 
-<p align="center">
-<img src="./figs/rosa-illus-bar.png" alt="Summary of RoSA results" width="auto"/>
+<p float="left" align="middle">
+  <img src="./figs/rosa-illus.png" height="350" />
+  <img src="./figs/rosa-bar.png" height="350" /> 
 </p>
 
 
@@ -84,11 +85,11 @@ The training scripts will run the evaluation right after the training is finishe
 Below is a comparison between Full Fine-Tuning (FFT), Low-Rank Adaptation (LoRA), Pure Sparse Adaptation (SpA), and Robust Adaptation (RoSA). The first table shows results for the case where the pre-trained parameters are stored in the *bf16* format, while the second one presents results for [4-bit double-qunatinzed pre-trained parameters](https://arxiv.org/abs/2305.14314).
 
 <p align="center">
-<img src="./figs/rosa_results.png" alt="Summary of RoSA results" height="500" width="auto"/>
+<img src="./figs/rosa_results.png" alt="Summary of RoSA results" height="350" width="auto"/>
 </p>
 
 <p align="center">
-<img src="./figs/qrosa_results.png" alt="Summary of QRoSA results" height="500" width="auto"/>
+<img src="./figs/qrosa_results.png" alt="Summary of QRoSA results" height="350" width="auto"/>
 </p>
 
 
