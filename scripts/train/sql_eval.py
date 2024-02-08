@@ -29,7 +29,7 @@ def batch_eval(model, tokenizer, prompt, rgx, batch):
 @torch.no_grad()
 def eval_sql(model, tokenizer):
     sql_dataset = load_dataset('json',
-                               data_files="/nfs/scistore19/alistgrp/stabesh/projects/spagsm/data/sql/valid.jsonl",
+                               data_files="./data/sql/valid.jsonl",
                                split="train")
     sql_dataset = sql_dataset.map(
         lambda example: {

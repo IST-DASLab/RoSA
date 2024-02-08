@@ -69,7 +69,7 @@ train_loader:
     hf_name: json
     split: train
     hf_kwargs:
-      data_files: "/nfs/scistore19/alistgrp/stabesh/projects/spagsm/data/sql/train.jsonl"
+      data_files: "./data/sql/train.jsonl"
     preprocessing_fn: finetune_example.preprocessing:sql_preprocessing_function
     max_seq_len: ${max_seq_len}
     allow_pad_trimming: false
