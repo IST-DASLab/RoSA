@@ -15,7 +15,7 @@ conda create --name rosa python=3.10 -y
 conda activate rosa
 ```
 
-2. Install a version of [pytorch](https://pytorch.org/) (>=2.1.2) compatible with your CUDA version (please use conda instead of pip to ensure all the dependencies are installed properly). For example, if you have CUDA version 11.8, run the following command:
+2. Install a version of [pytorch](https://pytorch.org/) (>=2.1.2) compatible with your CUDA (please use conda instead of pip to ensure all the dependencies are installed properly). For example, if you have CUDA version 11.8, run the following command:
 ```
 conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
 ```
