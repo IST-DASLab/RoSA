@@ -2,6 +2,13 @@
 
 This repository includes the code for the paper ["RoSA: Accurate Parameter-Efficient Fine-Tuning via Robust Adaptation"](https://arxiv.org/abs/2401.04679).
 
+Robust Adaptation (RoSA)              |  Comparison with other methods
+:-------------------------:|:-------------------------:
+![](./figs/barplot_single.pdf)  |  ![](./figs/rosa-illustration-compressed.pdf)
+
+Robust Adaptation (RoSA)              |  Comparison with other methods
+:-------------------------:|:-------------------------:
+<embed src="./figs/barplot_single.pdf" type="application/pdf">  |  <embed src="./figs/rosa-illustration-compressed.pdf" type="application/pdf">
 
 
 ## Installation
