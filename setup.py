@@ -47,21 +47,24 @@ classifiers = [
 ]
 
 install_requires = [
-    'mosaicml[libcloud,wandb,mlflow]>=0.15.0,<0.16',
-    'accelerate>=0.20',  # for HF inference `device_map`
-    'transformers>=4.31,<4.32',
+    # 'mosaicml[libcloud,wandb,mlflow]>=0.15.1,<0.16',
+    'mosaicml[libcloud,wandb,oci,gcs]>=0.19,<0.20',
+    'mlflow>=2.10,<3',
+    'accelerate>=0.26.1',
+    'transformers==4.31.0',
     'mosaicml-streaming>=0.5.1,<0.6',
-    'torch>=1.13.1',
+    'torch>=2.1.2',
     'datasets>=2.16.1',
     'sentencepiece==0.1.97',
     'einops==0.5.0',
-    'omegaconf>=2.2.3,<3',
+    'omegaconf==2.3.0',
     'slack-sdk<4',
     'mosaicml-cli>=0.3,<1',
     'onnx==1.14.0',
     'onnxruntime==1.15.1',
     'cmake>=3.25.0,<=3.26.3',  # required for triton-pre-mlir below
     'fire',
+    'chardet'
     # PyPI does not support direct dependencies, so we remove this line before uploading from PyPI
     #'triton-pre-mlir@git+https://github.com/vchiley/triton.git@triton_pre_mlir#subdirectory=python',
 ]

@@ -1,14 +1,10 @@
 # Robust Adaptation (RoSA)
 
-This repository includes the code for the paper ["RoSA: Accurate Parameter-Efficient Fine-Tuning via Robust Adaptation"](https://arxiv.org/abs/2401.04679).
+This repository includes the code for the paper ["RoSA: Accurate Parameter-Efficient Fine-Tuning via Robust Adaptation"](https://arxiv.org/abs/2401.04679). Below you find an illustration of RoSA and a brief comparision with Full Fine-Tuning (FFT) and Low-Rank Adaptation (LoRA).
 
-Robust Adaptation (RoSA)              |  Comparison with other methods
-:-------------------------:|:-------------------------:
-![](./figs/barplot_single.pdf)  |  ![](./figs/rosa-illustration-compressed.pdf)
-
-Robust Adaptation (RoSA)              |  Comparison with other methods
-:-------------------------:|:-------------------------:
-<embed src="./figs/barplot_single.pdf" type="application/pdf">  |  <embed src="./figs/rosa-illustration-compressed.pdf" type="application/pdf">
+<p align="center">
+<img src="./figs/rosa-illus-bar.png" alt="Summary of RoSA results" width="auto"/>
+</p>
 
 
 ## Installation
@@ -18,15 +14,15 @@ conda create --name rosa python=3.10 -y
 conda activate rosa
 ```
 
-2. Install the latest version of [pytorch](https://pytorch.org/) compatible with your system (preferably using conda instead of pip to ensure all the dependencies are installed properly). For example, if you have cuda version 11.8, run the following command:
+2. Install the latest version of [pytorch](https://pytorch.org/) (please use conda instead of pip to ensure all the dependencies are installed properly). For example, if you have cuda version 11.8, run the following command:
 ```
-conda install pytorch pytorch-cuda=11.8 -c pytorch -c nvidia
+conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
 ```
 
 3. Install this repository, which is a fork of [MosaicML's llm-foundry](https://github.com/mosaicml/llm-foundry) including the experiments presented in the paper:
 ```
 git clone https://github.com/IST-DASLab/RoSA.git && cd RoSA
-pip install -e .
+pip install .
 ```
 
 4. Install the [*spops*](https://github.com/IST-DASLab/spops) library, which we use under the hood to perform sparse operations: 
@@ -44,7 +40,7 @@ pip install git+https://github.com/IST-DASLab/peft-rosa.git
 git clone https://github.com/EleutherAI/lm-evaluation-harness.git
 cd lm-evaluation-harness
 git reset --hard 2c18e367c6ded428863cd1fd4cf9558ca49d68dc
-pip install -e .
+pip install .
 cd ..
 ```
 
@@ -88,9 +84,13 @@ The training scripts will run the evaluation right after the training is finishe
 Below is a comparison between Full Fine-Tuning (FFT), Low-Rank Adaptation (LoRA), Pure Sparse Adaptation (SpA), and Robust Adaptation (RoSA). The first table shows results for the case where the pre-trained parameters are stored in the *bf16* format, while the second one presents results for [4-bit double-qunatinzed pre-trained parameters](https://arxiv.org/abs/2305.14314).
 
 <p align="center">
-<img src="./figs/rosa_results.png" alt="Summary of RoSA results" width="700"/>
-<img src="./figs/qrosa_results.png" alt="Summary of QRoSA results" width="400"/>
+<img src="./figs/rosa_results.png" alt="Summary of RoSA results" height="500" width="auto"/>
 </p>
+
+<p align="center">
+<img src="./figs/qrosa_results.png" alt="Summary of QRoSA results" height="500" width="auto"/>
+</p>
+
 
 ## Citation
 If you plan to use our work in you projects, please consider citing our paper:
