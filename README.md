@@ -57,23 +57,23 @@ cd scripts/train/
 To run quick experiments, simply run any of the following commands, each of which corresponds to one of the single-epoch experiments in the paper:
 
 ```
-# best QRoSA on gsm8k
-CUDA_VISIBLE_DEVICES=0 bash scripts/llama2-7b/restart_7b_gsm_4bit.sh
-
 # best RoSA on gsm8k
 CUDA_VISIBLE_DEVICES=0 bash scripts/llama2-7b/restart_7b_gsm_bf16.sh
 
-# best QRoSA on sql
-CUDA_VISIBLE_DEVICES=0 bash scripts/llama2-7b/restart_7b_sql_4bit.sh
+# best RoSA on viggo
+CUDA_VISIBLE_DEVICES=0 bash scripts/llama2-7b/restart_7b_viggo_bf16.sh
 
 # best RoSA on sql
 CUDA_VISIBLE_DEVICES=0 bash scripts/llama2-7b/restart_7b_sql_bf16.sh
 
+# best QRoSA on gsm8k
+CUDA_VISIBLE_DEVICES=0 bash scripts/llama2-7b/restart_7b_gsm_4bit.sh
+
 # best QRoSA on viggo
 CUDA_VISIBLE_DEVICES=0 bash scripts/llama2-7b/restart_7b_viggo_4bit.sh
 
-# best RoSA on viggo
-CUDA_VISIBLE_DEVICES=0 bash scripts/llama2-7b/restart_7b_viggo_bf16.sh
+# best QRoSA on sql
+CUDA_VISIBLE_DEVICES=0 bash scripts/llama2-7b/restart_7b_sql_4bit.sh
 ```
 
 These scripts essentially run `scripts/restarter_llama2.sh` with different hyper-parameters. `scripts/restarter_llama2.sh` takes care of low-rank adapter warmup and restarting the training after mask generation. Feel free to tweak the hyper-parameters in any of these scripts.
