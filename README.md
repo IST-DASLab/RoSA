@@ -36,7 +36,7 @@ pip install git+https://github.com/IST-DASLab/spops.git
 pip install git+https://github.com/IST-DASLab/peft-rosa.git
 ```
 
-6. For evaluation, we use [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness). Run the following command to install the compatible version:
+6. For evaluation, we use [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness). Run the following commands to install the compatible version:
 ```
 git clone https://github.com/EleutherAI/lm-evaluation-harness.git
 cd lm-evaluation-harness
