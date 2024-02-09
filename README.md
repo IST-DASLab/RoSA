@@ -31,7 +31,7 @@ pip install -e .
 pip install git+https://github.com/IST-DASLab/spops.git
 ```
 
-5. Install [RoSA's integration into the PEFT library](https://github.com/IST-DASLab/peft-rosa) by running:
+5. Install [RoSA's integration into huggingface's Parameter-Efficient Fine-Tuning (PEFT) library](https://github.com/IST-DASLab/peft-rosa) by running:
 ```
 pip install git+https://github.com/IST-DASLab/peft-rosa.git
 ```
