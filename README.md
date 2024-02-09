@@ -81,7 +81,7 @@ Each training (without evaluation) should take around one hour. These scripts es
 ### Evaluation
 The training scripts will run the evaluation right after the training is finished and store the results in the `evals` folder. Look at the final few lines of `scripts/restarter_llama2.sh`.
 
-Evaluation on ViGGO and SQL only take a few minutes. However, evaluation on GSM8k takes around 45 minutes for *bf16* models and 3 hours for *4bit* models (since merging the RoSA adapters in the *4bit* case is tricky, and the current version of the code does not support it).
+Evaluation on ViGGO and SQL only takes a few minutes. However, evaluation on GSM8k takes around 45 minutes for *bf16* models and 3 hours for *4bit* models (since merging the RoSA adapters in the *4bit* case is tricky, and the current version of the code does not support it).
 
 ## RoSA Results
 Below is a comparison between Full Fine-Tuning (FFT), Low-Rank Adaptation (LoRA), Pure Sparse Adaptation (SpA), and Robust Adaptation (RoSA). The first table shows results for the case where the pre-trained parameters are stored in the *bf16* format, while the second one presents results for [4-bit double-qunatinzed pre-trained parameters](https://arxiv.org/abs/2305.14314).
