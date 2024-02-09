@@ -23,7 +23,7 @@ conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvi
 3. Install this repository, which is a fork of [MosaicML's llm-foundry](https://github.com/mosaicml/llm-foundry) including the experiments presented in the paper:
 ```
 git clone https://github.com/IST-DASLab/RoSA.git && cd RoSA
-pip install .
+pip install -e .
 ```
 
 4. Install the [*spops*](https://github.com/IST-DASLab/spops) library, which we use under the hood to perform sparse operations: 
@@ -40,8 +40,8 @@ pip install git+https://github.com/IST-DASLab/peft-rosa.git
 ```
 git clone https://github.com/EleutherAI/lm-evaluation-harness.git
 cd lm-evaluation-harness
-git reset --hard 2c18e367c6ded428863cd1fd4cf9558ca49d68dc
-pip install .
+git reset checkout 2c18e367c6ded428863cd1fd4cf9558ca49d68dc
+pip install -e .
 cd ..
 ```
 
