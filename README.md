@@ -84,7 +84,7 @@ The training scripts will run the evaluation right after the training is finishe
 Evaluation on ViGGO and SQL only takes a few minutes. However, evaluation on GSM8k takes around 45 minutes for *bf16* models and 3 hours for *4bit* models (since merging the RoSA adapters in the *4bit* case is tricky, and the current version of the code does not support it).
 
 ## RoSA Results
-Below is a comparison between Full Fine-Tuning (FFT), Low-Rank Adaptation (LoRA), Pure Sparse Adaptation (SpA), and Robust Adaptation (RoSA). The first table shows results for the case where the pre-trained parameters are stored in the *bf16* format, while the second one presents results for [4-bit double-qunatinzed pre-trained parameters](https://arxiv.org/abs/2305.14314).
+Below is a comparison between Full Fine-Tuning (FFT), Low-Rank Adaptation (LoRA), pure Sparse Adaptation (SpA), and Robust Adaptation (RoSA). The first table shows results for the case where the pre-trained parameters are stored in the *bf16* format, while the second one presents results for [4-bit double-qunatinzed pre-trained parameters](https://arxiv.org/abs/2305.14314).
 
 <p align="center">
 <img src="./figs/rosa_results.png" alt="Summary of RoSA results" height="350" width="auto"/>
