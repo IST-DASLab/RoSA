@@ -40,7 +40,7 @@ pip install git+https://github.com/IST-DASLab/peft-rosa.git
 ```
 git clone https://github.com/EleutherAI/lm-evaluation-harness.git
 cd lm-evaluation-harness
-git reset checkout 2c18e367c6ded428863cd1fd4cf9558ca49d68dc
+git checkout 2c18e367c6ded428863cd1fd4cf9558ca49d68dc
 pip install -e .
 cd ..
 ```
