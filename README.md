@@ -96,7 +96,7 @@ Below is a comparison between Full Fine-Tuning (FFT), Low-Rank Adaptation (LoRA)
 
 
 ## Citation
-If you plan to use our work in you projects, please consider citing our paper:
+If you plan to use our work in your projects, please consider citing our paper:
 
 ```
 @article{nikdan2024rosa,
