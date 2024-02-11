@@ -90,7 +90,9 @@ def main(
     model, tokenizer = load_model(model_name_or_path, peft_path, precision)
     acc = eval_viggo(model, tokenizer)
     with open(out_path, 'w') as f:
-        json.dump({'viggo/validation_acc': acc}, f)
+        metric = {'viggo/validation_acc': acc}
+        print(metric)
+        json.dump(metric, f)
     
     if WANDB_PROJECT is not None:
         api = wandb.Api()
