@@ -1,6 +1,6 @@
 # Robust Adaptation (RoSA)
 
-This repository includes the code for the paper ["RoSA: Accurate Parameter-Efficient Fine-Tuning via Robust Adaptation"](https://arxiv.org/abs/2401.04679). Below you find an illustration of RoSA and a brief comparison with Full Fine-Tuning (FFT) and Low-Rank Adaptation (LoRA).
+This repository includes the code for the paper ["RoSA: Accurate Parameter-Efficient Fine-Tuning via Robust Adaptation."](https://arxiv.org/abs/2401.04679) Below you find an illustration of RoSA and a brief comparison with Full Fine-Tuning (FFT) and Low-Rank Adaptation (LoRA).
 
 <p float="left" align="middle">
   <img src="./figs/rosa-illus.png" height="350" />
