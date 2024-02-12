@@ -53,7 +53,7 @@ conda activate rosa
 cd scripts/train/
 ```
 
-We provide scripts for training LLaMA2 models on three datasets: [GSM8k](https://github.com/openai/grade-school-math), [ViGGO](https://huggingface.co/datasets/GEM/viggo), and [SQL](https://arxiv.org/abs/1709.00103). These datasets are chosen such that they are highly specialized and, therefore, require fine-tuning for good performance: for example, on GSM8k, the pre-trained LLaMA-2 model has 0% one-shot accuracy, and the multi-shot accuracy is also very poor (around 6%). To run quick experiments, simply run any of the following commands, each of which corresponds to one of the single-epoch experiments in the paper:
+We provide scripts for training LLaMA-2 models on three datasets: [GSM8k](https://github.com/openai/grade-school-math), [ViGGO](https://huggingface.co/datasets/GEM/viggo), and [SQL](https://arxiv.org/abs/1709.00103). These datasets are chosen such that they are highly specialized and, therefore, require fine-tuning for good performance: for example, on GSM8k, the pre-trained LLaMA-2 model has 0% one-shot accuracy, and the multi-shot accuracy is also very poor (around 6%). To run quick experiments, simply run any of the following commands, each of which corresponds to one of the single-epoch experiments in the paper:
 
 ```
 # RoSA on gsm8k
