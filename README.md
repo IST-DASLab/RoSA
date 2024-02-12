@@ -46,7 +46,6 @@ cd ..
 ```
 
 ## Quick Start
-
 ### Training
 First things first, activate the environment and cd into `scripts/train/`
 ```
@@ -54,7 +53,7 @@ conda activate rosa
 cd scripts/train/
 ```
 
-To run quick experiments, simply run any of the following commands, each of which corresponds to one of the single-epoch experiments in the paper:
+We provide scripts for training LLaMA2 models on three datasets: GSM8k, ViGGO, and SQL. These datasets are chosen such that they are highly specialized and, therefore, require fine-tuning for good performance: for example, on GSM8k, the pre-trained LLaMA-2 model has 0% one-shot accuracy, and the multi-shot accuracy is also very poor (around 6%). To run quick experiments, simply run any of the following commands, each of which corresponds to one of the single-epoch experiments in the paper:
 
 ```
 # RoSA on gsm8k
@@ -76,7 +75,7 @@ CUDA_VISIBLE_DEVICES=0 bash scripts/llama2-7b/restart_7b_viggo_4bit.sh
 CUDA_VISIBLE_DEVICES=0 bash scripts/llama2-7b/restart_7b_sql_4bit.sh
 ```
 
-Each training (without evaluation) should take around one hour. These scripts essentially run `scripts/restarter_llama2.sh` with different hyper-parameters. `scripts/restarter_llama2.sh` takes care of low-rank adapter warmup and restarting the training after mask generation. Feel free to tweak the hyper-parameters in any of these scripts.
+Training on the GSM8k, ViGGO, and SQL should roughly take around one, one, and three hours, respectively. These scripts essentially run `scripts/restarter_llama2.sh` with different hyper-parameters. `scripts/restarter_llama2.sh` takes care of low-rank adapter warmup and restarting the training after mask generation. Feel free to tweak the hyper-parameters in any of these scripts.
 
 ### Evaluation
 The training scripts will run the evaluation right after the training is finished and store the results in the `evals` folder. Look at the final few lines of `scripts/restarter_llama2.sh`.
