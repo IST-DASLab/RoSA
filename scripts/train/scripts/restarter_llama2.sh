@@ -21,8 +21,8 @@ export SPA_DENSITY= # the sparse adapters' density
 export LORA_R= # the low-rank adapters' rank
 
 # wandb logging entity and project (optional)
-export WANDB_ENTITY=ist
-export WANDB_PROJECT=rosa-release
+export WANDB_ENTITY=
+export WANDB_PROJECT=
 
 
 # take all the input arguments and put them in environment variables
