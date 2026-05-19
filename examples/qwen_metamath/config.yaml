@@ -1,0 +1,34 @@
+# Qwen3.5-9B (multimodal); use Qwen/Qwen3.5-9B-Base for text-only fallback
+model_name_or_path: Qwen/Qwen3.5-9B
+dataset_name: meta-math/MetaMathQA
+dataset_split: train
+trust_remote_code: true
+
+rosa:
+  lora_r: 16
+  lora_alpha: 16
+  lora_dropout: 0.05
+  spa_d: 0.01
+  spa_num_grads: 1
+  grad_acc_mode: mean_squared
+  target_modules: all-linear
+  schedule: wl64
+  lora_lr: 0.0007
+
+training:
+  output_dir: ./outputs/qwen35_metamath
+  num_train_epochs: 1.0
+  per_device_train_batch_size: 1
+  gradient_accumulation_steps: 32
+  learning_rate: 0.0002
+  warmup_steps: 20
+  max_seq_length: 2048
+  logging_steps: 10
+  save_steps: 500
+  seed: 42
+  bf16: true
+  gradient_checkpointing: true
+  report_to: none
+
+quantization:
+  load_in_4bit: false
