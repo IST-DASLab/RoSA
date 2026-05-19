@@ -1,0 +1,6 @@
+[submodule "third_party/peft-rosa"]
+	path = third_party/peft-rosa
+	url = https://github.com/soroush-tabesh/peft-rosa.git
+[submodule "third_party/spops"]
+	path = third_party/spops
+	url = https://github.com/IST-DASLab/spops.git
