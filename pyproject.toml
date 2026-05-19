@@ -1,0 +1,75 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "rosa"
+version = "0.2.0"
+description = "RoSA: Robust Adaptation for parameter-efficient fine-tuning with HuggingFace"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.11,<3.12"
+authors = [
+    { name = "IST-DASLab" },
+]
+dependencies = [
+    "accelerate>=1.0",
+    "bitsandbytes>=0.45",
+    "datasets>=3.0",
+    "peft",
+    "pyyaml>=6.0",
+    "torch>=2.10",
+    "transformers>=5.5",
+    "tqdm>=4.66",
+    "trl>=0.11",
+]
+
+[project.optional-dependencies]
+eval = [
+    "evaluate>=0.4",
+    "lm-eval>=0.4",
+]
+dev = [
+    "pre-commit>=4.0",
+    "pytest>=8.0",
+    "ruff>=0.9",
+]
+
+[project.scripts]
+rosa-train = "rosa.cli:main_train"
+rosa-eval = "rosa.cli:main_eval"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/rosa"]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.0",
+    "pytest>=8.0",
+    "ruff>=0.9",
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
+explicit = true
+
+[tool.uv.sources]
+peft = { path = "third_party/peft-rosa", editable = true }
+torch = { index = "pytorch-cu130" }
+
+# After building spops from source against CUDA 13.0:
+# [tool.uv.sources]
+# spops = { path = "third_party/spops", editable = true }
+# Then: uv sync --extra spops  (add spops optional dep back to [project.optional-dependencies])
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

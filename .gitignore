@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+dist/
+build/
+.venv/
+venv/
+
+# Training outputs
+outputs/
+checkpoints/
+wandb/
+evals/
+*.bin
+*.pt
+*.safetensors
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+
+# Submodule build artifacts
+third_party/spops/build/
+third_party/spops/**/*.so

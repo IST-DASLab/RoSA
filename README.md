@@ -1,103 +1,92 @@
-# Robust Adaptation (RoSA)
+# RoSA: Robust Adaptation
 
-This repository includes the code for the paper ["RoSA: Accurate Parameter-Efficient Fine-Tuning via Robust Adaptation."](https://arxiv.org/abs/2401.04679) Below you find an illustration of RoSA and a brief comparison with Full Fine-Tuning (FFT) and Low-Rank Adaptation (LoRA).
+Parameter-efficient fine-tuning via **RoSA** (Robust Adaptation), combining low-rank and sparse adapters.
+Paper: [RoSA: Accurate Parameter-Efficient Fine-Tuning via Robust Adaptation](https://arxiv.org/abs/2401.04679).
 
 <p float="left" align="middle">
   <img src="./figs/rosa-illus.png" height="350" />
-  <img src="./figs/rosa-bar.png" height="350" /> 
+  <img src="./figs/rosa-bar.png" height="350" />
 </p>
 
+## What's new on `refactor`
+
+This branch replaces the MosaicML Composer / llm-foundry stack with:
+
+- **[HuggingFace Transformers](https://github.com/huggingface/transformers)** + **[TRL](https://github.com/huggingface/trl)** for SFT
+- **[peft-rosa](https://github.com/soroush-tabesh/peft-rosa)** (`rosa-tuner` branch, git submodule) for RoSA adapters
+- **[spops](https://github.com/IST-DASLab/spops)** (git submodule) for sparse kernels when `spa_d > 0`
+- **[uv](https://docs.astral.sh/uv/)** for reproducible installs (Python 3.11, PyTorch ≥2.10, CUDA 13.0)
+
+Training uses a single `SFTTrainer` run with `peft.tuners.rosa.RosaScheduler`, which handles LoRA warmup, gradient-based mask generation, and sparse adapter activation.
+
+The ICML 2024 submission code is preserved in [`legacy/`](legacy/) and on the **`icml2024`** branch.
 
 ## Installation
-1. Create a clean environment and activate it:
-```
-conda create --name rosa python=3.10 -y
-conda activate rosa
-```
 
-2. Install a version of [pytorch](https://pytorch.org/) (>=2.1.2) compatible with your CUDA (please use conda instead of pip to ensure all the dependencies are installed properly). For example, if you have CUDA version 11.8, run the following command:
-```
-conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
-```
+**Prerequisites:** Python 3.11, CUDA 13.0 toolkit (`nvcc`) for spops when using sparse adapters, C++ compiler, [uv](https://docs.astral.sh/uv/).
 
-3. Install this repository, which is a fork of [MosaicML's llm-foundry](https://github.com/mosaicml/llm-foundry) including the experiments presented in the paper:
-```
-git clone https://github.com/IST-DASLab/RoSA.git && cd RoSA
-pip install -e .
+```bash
+git clone git@github.com:IST-DASLab/RoSA.git
+cd RoSA
+git checkout refactor
+git submodule update --init --recursive
+cd third_party/peft-rosa && git checkout rosa-tuner && cd ../..
+
+uv sync
 ```
 
-4. Install the [*spops*](https://github.com/IST-DASLab/spops) library, which we use under the hood to perform sparse operations: 
-```
-pip install git+https://github.com/IST-DASLab/spops.git
-```
+`peft` is installed in editable mode from `third_party/peft-rosa`. To develop the tuner, commit inside that submodule and push to [peft-rosa](https://github.com/soroush-tabesh/peft-rosa), then bump the submodule SHA here.
 
-5. Install [RoSA's integration into huggingface's Parameter-Efficient Fine-Tuning (PEFT) library](https://github.com/IST-DASLab/peft-rosa) by running:
-```
-pip install git+https://github.com/IST-DASLab/peft-rosa.git
-```
+> **SSH note:** If `git submodule` prompts for your SSH key passphrase, unlock your agent first (`ssh-add`) or use HTTPS remotes locally.
 
-6. For evaluation, we use [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness). Run the following commands to install the compatible version:
-```
-git clone https://github.com/EleutherAI/lm-evaluation-harness.git
-cd lm-evaluation-harness
-git checkout 2c18e367c6ded428863cd1fd4cf9558ca49d68dc
-pip install -e .
-cd ..
+## Quickstart
+
+Train **Llama-3.2-3B-Instruct** on MetaMathQA:
+
+```bash
+bash examples/llama3_metamath/run.sh
 ```
 
-## Quick Start
-### Training
-First things first, activate the environment and cd into `scripts/train/`
-```
-conda activate rosa
-cd scripts/train/
+Train **Qwen3.5-9B** on MetaMathQA:
+
+```bash
+bash examples/qwen_metamath/run.sh
 ```
 
-We provide scripts for training LLaMA-2 models on three datasets: [GSM8k](https://github.com/openai/grade-school-math), [ViGGO](https://huggingface.co/datasets/GEM/viggo), and [SQL](https://arxiv.org/abs/1709.00103). These datasets are chosen such that they are highly specialized and, therefore, require fine-tuning for good performance: for example, on GSM8k, the pre-trained LLaMA-2 model has 0% one-shot accuracy, and the multi-shot accuracy is also very poor (around 6%). To run quick experiments, simply run any of the following commands, each of which corresponds to one of the single-epoch experiments in the paper:
+Evaluate on GSM8K / MATH:
 
-```
-# RoSA on gsm8k
-CUDA_VISIBLE_DEVICES=0 bash scripts/llama2-7b/restart_7b_gsm_bf16.sh
+```bash
+uv run rosa-eval --model meta-llama/Llama-3.2-3B-Instruct \
+  --adapter ./outputs/llama3_metamath --benchmark gsm8k --max-samples 100
 
-# RoSA on viggo
-CUDA_VISIBLE_DEVICES=0 bash scripts/llama2-7b/restart_7b_viggo_bf16.sh
-
-# RoSA on sql
-CUDA_VISIBLE_DEVICES=0 bash scripts/llama2-7b/restart_7b_sql_bf16.sh
-
-# QRoSA on gsm8k
-CUDA_VISIBLE_DEVICES=0 bash scripts/llama2-7b/restart_7b_gsm_4bit.sh
-
-# QRoSA on viggo
-CUDA_VISIBLE_DEVICES=0 bash scripts/llama2-7b/restart_7b_viggo_4bit.sh
-
-# QRoSA on sql
-CUDA_VISIBLE_DEVICES=0 bash scripts/llama2-7b/restart_7b_sql_4bit.sh
+uv run rosa-eval --model meta-llama/Llama-3.2-3B-Instruct \
+  --adapter ./outputs/llama3_metamath --benchmark math --max-samples 50
 ```
 
-Training on the GSM8k, ViGGO, and SQL should roughly take around one, one, and three hours, respectively. These scripts essentially run `scripts/restarter_llama2.sh` with different hyper-parameters. `scripts/restarter_llama2.sh` takes care of low-rank adapter warmup and restarting the training after mask generation. Feel free to tweak the hyper-parameters in any of these scripts.
+Or use a YAML config directly:
 
-### Evaluation
-The training scripts will run the evaluation right after the training is finished and store the results in the `evals` folder. Look at the final few lines of `scripts/restarter_llama2.sh`.
+```bash
+uv run rosa-train --config examples/llama3_metamath/config.yaml
+```
 
-Evaluation on ViGGO and SQL only takes a few minutes. However, evaluation on GSM8k takes around 45 minutes for *bf16* models and 3 hours for *4bit* models (since merging the RoSA adapters in the *4bit* case is tricky, and the current version of the code does not support it).
+## Project layout
 
-## RoSA Results
-Below is a comparison between Full Fine-Tuning (FFT), Low-Rank Adaptation (LoRA), pure Sparse Adaptation (SpA), and Robust Adaptation (RoSA). The first table shows results for the case where the pre-trained parameters are stored in the *bf16* format, while the second one presents results for [4-bit double-qunatinzed pre-trained parameters](https://arxiv.org/abs/2305.14314).
+```
+src/rosa/          # Training, data, eval
+examples/          # Llama-3.2 and Qwen3.5 MetaMathQA recipes
+third_party/
+  peft-rosa/       # RoSA PEFT integration (upstream PR: rosa-tuner branch)
+  spops/           # Sparse ops (built from source when spa_d > 0)
+legacy/            # ICML 2024 llm-foundry code
+```
 
-<p align="center">
-<img src="./figs/rosa_results.png" alt="Summary of RoSA results" height="350" width="auto"/>
-</p>
+## Upstream PEFT PR
 
-<p align="center">
-<img src="./figs/qrosa_results.png" alt="Summary of QRoSA results" height="350" width="auto"/>
-</p>
-
+RoSA is integrated in `third_party/peft-rosa` on the **`rosa-tuner`** branch, following the [PEFT contributing guide](https://huggingface.co/docs/peft/main/en/developer_guides/contributing). Open a draft PR from `soroush-tabesh/peft-rosa:rosa-tuner` → `huggingface/peft:main` when ready.
 
 ## Citation
-If you plan to use our work in your projects, please consider citing our paper:
 
-```
+```bibtex
 @article{nikdan2024rosa,
   title={RoSA: Accurate Parameter-Efficient Fine-Tuning via Robust Adaptation},
   author={Nikdan, Mahdi and Tabesh, Soroush and Crnčević, Elvir and Alistarh, Dan},

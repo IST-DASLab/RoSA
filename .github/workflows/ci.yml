@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [refactor, main]
+  pull_request:
+    branches: [refactor, main]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install uv
+        run: pip install uv
+
+      - name: Sync dependencies (CPU torch fallback)
+        run: |
+          # CI has no CUDA; install CPU torch and skip spops native build if needed
+          uv sync --extra dev || pip install -e ".[dev]" || true
+        continue-on-error: true
+
+      - name: Install package (minimal)
+        run: |
+          pip install pytest pyyaml ruff
+          pip install -e . --no-deps 2>/dev/null || pip install -e .
+
+      - name: Ruff
+        run: ruff check src tests examples
+
+      - name: Pytest
+        run: pytest -q tests/test_smoke.py
