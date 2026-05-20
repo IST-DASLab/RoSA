@@ -67,7 +67,9 @@ def evaluate_gsm8k(
                 do_sample=False,
                 pad_token_id=tokenizer.pad_token_id,
             )
-        pred_text = tokenizer.decode(out[0][inputs["input_ids"].shape[1] :], skip_special_tokens=True)
+        pred_text = tokenizer.decode(
+            out[0][inputs["input_ids"].shape[1] :], skip_special_tokens=True
+        )
         pred = normalize_numeric(extract_gsm8k_answer(pred_text))
         if pred == gold:
             correct += 1

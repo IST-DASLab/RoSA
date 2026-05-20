@@ -15,9 +15,7 @@ from rosa.eval.utils import extract_boxed_answer, normalize_numeric
 
 logger = logging.getLogger(__name__)
 
-MATH_PROMPT = (
-    "Solve the following problem. Put your final answer in \\boxed{{}}.\n\n{problem}"
-)
+MATH_PROMPT = "Solve the following problem. Put your final answer in \\boxed{{}}.\n\n{problem}"
 
 
 def evaluate_math(
@@ -72,7 +70,9 @@ def evaluate_math(
                 do_sample=False,
                 pad_token_id=tokenizer.pad_token_id,
             )
-        pred_text = tokenizer.decode(out[0][inputs["input_ids"].shape[1] :], skip_special_tokens=True)
+        pred_text = tokenizer.decode(
+            out[0][inputs["input_ids"].shape[1] :], skip_special_tokens=True
+        )
         pred = normalize_numeric(extract_boxed_answer(pred_text))
         if pred == gold:
             correct += 1
