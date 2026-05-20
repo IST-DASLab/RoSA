@@ -16,23 +16,18 @@ dependencies = [
     "accelerate>=1.0",
     "bitsandbytes>=0.45",
     "datasets>=3.0",
-    "peft",
-    "pyyaml>=6.0",
-    "torch>=2.10",
-    "transformers>=5.5",
-    "tqdm>=4.66",
-    "trl>=0.11",
-]
-
-[project.optional-dependencies]
-eval = [
     "evaluate>=0.4",
     "lm-eval>=0.4",
-]
-dev = [
+    "peft",
     "pre-commit>=4.0",
     "pytest>=8.0",
+    "pyyaml>=6.0",
     "ruff>=0.9",
+    "spops",
+    "torch>=2.10",
+    "tqdm>=4.66",
+    "transformers>=5.5",
+    "trl>=0.11",
 ]
 
 [project.scripts]
@@ -42,26 +37,18 @@ rosa-eval = "rosa.cli:main_eval"
 [tool.hatch.build.targets.wheel]
 packages = ["src/rosa"]
 
-[dependency-groups]
-dev = [
-    "pre-commit>=4.0",
-    "pytest>=8.0",
-    "ruff>=0.9",
-]
-
 [[tool.uv.index]]
 name = "pytorch-cu130"
 url = "https://download.pytorch.org/whl/cu130"
 explicit = true
 
 [tool.uv.sources]
-peft = { path = "third_party/peft-rosa", editable = true }
 torch = { index = "pytorch-cu130" }
+peft = { path = "third_party/peft-rosa", editable = true }
+spops = { path = "third_party/spops" }
 
-# After building spops from source against CUDA 13.0:
-# [tool.uv.sources]
-# spops = { path = "third_party/spops", editable = true }
-# Then: uv sync --extra spops  (add spops optional dep back to [project.optional-dependencies])
+[tool.uv]
+no-build-isolation-package = ["spops"]
 
 [tool.ruff]
 line-length = 100

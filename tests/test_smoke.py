@@ -3,6 +3,7 @@
 from pathlib import Path
 
 import pytest
+import torch
 
 from rosa.config import ExperimentConfig
 from rosa.eval.utils import extract_boxed_answer, extract_gsm8k_answer, normalize_numeric
@@ -13,7 +14,34 @@ def test_config_from_yaml():
     cfg = ExperimentConfig.from_yaml(cfg_path)
     assert "Llama" in cfg.model_name_or_path
     assert cfg.rosa.lora_r == 16
+    assert cfg.rosa.lora_lr == pytest.approx(7e-4)
+    assert cfg.training.learning_rate == pytest.approx(2e-4)
     assert cfg.training.bf16 is True
+
+
+def test_rosa_optimizer_param_groups():
+    import torch.nn as nn
+
+    from rosa.training.sft import build_rosa_optimizer, split_rosa_trainable_params
+
+    class FakeRosa(nn.Module):
+        def __init__(self):
+            super().__init__()
+            self.rosa_A = nn.Parameter(torch.zeros(1))
+            self.rosa_spa_values = nn.Parameter(torch.zeros(1))
+
+    model = FakeRosa()
+    lora, other = split_rosa_trainable_params(model)
+    assert len(lora) == 1
+    assert len(other) == 1
+
+    opt = build_rosa_optimizer(model, learning_rate=2e-4, lora_lr=7e-4)
+    assert opt is not None
+    assert len(opt.param_groups) == 2
+    assert opt.param_groups[0]["lr"] == pytest.approx(2e-4)
+    assert opt.param_groups[1]["lr"] == pytest.approx(7e-4)
+
+    assert build_rosa_optimizer(model, learning_rate=2e-4, lora_lr=None) is None
 
 
 def test_qwen_config():
